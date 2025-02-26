@@ -7,19 +7,18 @@ import { FormEvent, useEffect, useState } from "react";
 import authService from "@/src/services/authServce";
 import { useRouter } from "next/router";
 import ToastComponent from "@/src/componets/commom/toast";
-import Script from "next/script"; // 🚀 Correção: Importando Script do Next.js
+import Script from "next/script";
 
 const Register = function () {
   const router = useRouter();
   const [toastIsOpen, setToastIsOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
-  // 🚀 Correção: Adicionado router como dependência para evitar warning do ESLint
   useEffect(() => {
     if (sessionStorage.getItem("onebitflix-token")) {
-      router.push("/home");
+      router.push("/home")
     }
-  }, [router]); // ✅ Corrigido
+  }, [router])
 
   const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,12 +33,12 @@ const Register = function () {
     const confirmPassword = formData.get("confirmPassword")!.toString();
     const params = { firstName, lastName, phone, birth, email, password };
 
-    if (password !== confirmPassword) {
+    if (password != confirmPassword) {
       setToastIsOpen(true);
       setTimeout(() => {
         setToastIsOpen(false);
       }, 1000 * 5);
-      setToastMessage("Senhas não são iguais!");
+      setToastMessage("Senha não são iguais!");
 
       return;
     }
@@ -62,10 +61,9 @@ const Register = function () {
       <Head>
         <title>OneBitflix - Registro</title>
         <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
+        
       </Head>
-      {/* 🚀 Correção: Usando Script do Next.js para evitar erros */}
       <Script src="https://jsuites.net/v4/jsuites.js" strategy="lazyOnload" />
-
       <main className={styles.main}>
         <HeaderGeneric
           logoUrl="/"
@@ -155,7 +153,7 @@ const Register = function () {
                 id="password"
                 name="password"
                 type="password"
-                placeholder="Digite a sua senha (Min: 6 | Max: 20)"
+                placeholder="Digite a sua senha (Min: 6 | Max: 20"
                 required
                 minLength={6}
                 maxLength={20}

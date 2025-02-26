@@ -17,11 +17,10 @@ interface IndexPageProps {
 }
 
 const HomeNoAuth = function ({ course }: IndexPageProps) {
-
-  // 🚀 Correção: Incluído `AOS` como dependência no `useEffect`
+  // 🚀 Correção: Removendo `AOS` do array de dependências do `useEffect`
   useEffect(() => {
     AOS.init();
-  }, [AOS]); // ✅ Agora está correto
+  }, []); // ✅ Agora não gera warnings
 
   return (
     <>
@@ -30,13 +29,16 @@ const HomeNoAuth = function ({ course }: IndexPageProps) {
         <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
         <meta property="og:title" content="Onebitflix" key="title" />
         <meta
-          name="description" // 🚀 Correção: antes estava "descript", agora corrigido para "description"
+          name="description"
           content="Tenha acesso aos melhores conteúdos de programação simples e fácil"
         />
       </Head>
       <main>
-        <div className={styles.sectionBackground} data-aos="fade-zoom-in"
-        data-aos-duration="1600">
+        <div
+          className={styles.sectionBackground}
+          data-aos="fade-zoom-in"
+          data-aos-duration="1600"
+        >
           <HeaderNoAuth />
           <PresentationSection />
         </div>
@@ -44,7 +46,7 @@ const HomeNoAuth = function ({ course }: IndexPageProps) {
           <CardsSection />
         </div>
         <div data-aos="fade-up" data-aos-duration="1350">
-          <SlideSection newestCourses={course}/>
+          <SlideSection newestCourses={course} />
         </div>
         <Footer />
       </main>
@@ -52,15 +54,31 @@ const HomeNoAuth = function ({ course }: IndexPageProps) {
   );
 };
 
-// 🚀 Mantendo a melhor prática para `getStaticProps`
+// 🚀 Correção: Verificando se `res` e `res.data` existem antes de usá-los
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await courseService.getNewestCourses();
-  return {
-    props: {
-      course: res.data,
-    },
-    revalidate: 3600 * 24, // Revalida a cada 24 horas
-  };
+  try {
+    const res = await courseService.getNewestCourses();
+
+    if (!res || !res.data) {
+      throw new Error("Erro ao buscar cursos.");
+    }
+
+    return {
+      props: {
+        course: res.data,
+      },
+      revalidate: 3600 * 24, // Revalida a cada 24 horas
+    };
+  } catch (error) {
+    console.error("Erro ao buscar cursos:", error);
+
+    return {
+      props: {
+        course: [], // ✅ Retorna um array vazio para evitar erro de `undefined`
+      },
+      revalidate: 3600 * 24,
+    };
+  }
 };
 
 export default HomeNoAuth;
