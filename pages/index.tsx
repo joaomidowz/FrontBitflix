@@ -18,9 +18,10 @@ interface IndexPageProps {
 
 const HomeNoAuth = function ({ course }: IndexPageProps) {
 
+  // 🚀 Correção: Incluído `AOS` como dependência no `useEffect`
   useEffect(() => {
     AOS.init();
-  }, []);
+  }, [AOS]); // ✅ Agora está correto
 
   return (
     <>
@@ -29,7 +30,7 @@ const HomeNoAuth = function ({ course }: IndexPageProps) {
         <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
         <meta property="og:title" content="Onebitflix" key="title" />
         <meta
-          name="descript"
+          name="description" // 🚀 Correção: antes estava "descript", agora corrigido para "description"
           content="Tenha acesso aos melhores conteúdos de programação simples e fácil"
         />
       </Head>
@@ -39,25 +40,26 @@ const HomeNoAuth = function ({ course }: IndexPageProps) {
           <HeaderNoAuth />
           <PresentationSection />
         </div>
-          <div data-aos="fade-right" data-aos-duration="1200">
+        <div data-aos="fade-right" data-aos-duration="1200">
           <CardsSection />
-          </div>
-          <div data-aos="fade-up" data-aos-duration="1350">
+        </div>
+        <div data-aos="fade-up" data-aos-duration="1350">
           <SlideSection newestCourses={course}/>
-          </div>
-          <Footer/>
+        </div>
+        <Footer />
       </main>
     </>
   );
 };
 
+// 🚀 Mantendo a melhor prática para `getStaticProps`
 export const getStaticProps: GetStaticProps = async () => {
   const res = await courseService.getNewestCourses();
   return {
     props: {
       course: res.data,
     },
-    revalidate: 3600 * 24
+    revalidate: 3600 * 24, // Revalida a cada 24 horas
   };
 };
 

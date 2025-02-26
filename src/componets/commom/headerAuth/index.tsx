@@ -1,5 +1,6 @@
 import { Container, Form, Input } from "reactstrap";
 import styles from "./styles.module.scss";
+import Image from 'next/image';
 import Link from "next/link";
 import Modal from "react-modal";
 import { useState } from "react";
@@ -28,7 +29,7 @@ const HeaderAuth = function () {
     <>
       <Container className={styles.nav}>
         <Link href="/home">
-          <img
+          <Image
             src="/logoOnebitflix.svg"
             alt="logoOnebitfli"
             className={styles.imgLogoNav}
@@ -43,7 +44,7 @@ const HeaderAuth = function () {
               className={styles.input}
             />
           </Form>
-          <img
+          <Image
             src="/homeAuth/iconSearch.svg"
             alt="LupaHeader"
             className={styles.searchImg}

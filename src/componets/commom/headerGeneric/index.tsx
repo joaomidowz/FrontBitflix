@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import { Button, Container } from "reactstrap";
 import Link from "next/link";
+import Image from 'next/image';
 
 interface props {
   logoUrl: string,
@@ -14,7 +15,7 @@ const HeaderGeneric = function ({logoUrl, btnUrl, btnContent}: props) {
       <div className={styles.header}>
         <Container className={styles.headerContainer}>
           <Link href={logoUrl}>
-            <img src="/logoOnebitflix.svg" alt="logoRegister" 
+            <Image src="/logoOnebitflix.svg" alt="logoRegister" 
             className={styles.headerLogo}/>
           </Link>
           <Link href={btnUrl}>

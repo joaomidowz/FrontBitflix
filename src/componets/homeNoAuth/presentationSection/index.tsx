@@ -1,6 +1,7 @@
 import { Button, Col, Container, Row } from "reactstrap";
 import styles from "./styles.module.scss";
 import Link from "next/link";
+import Image from 'next/image';
 
 const PresentationSection = function () {
     return <>
@@ -13,18 +14,18 @@ const PresentationSection = function () {
                 evoluindo como programador</p>
                 <Link href="/register">
                 <Button outline className={styles.btnCta}>
-                    ACESSE AGORA <img src="/buttonPlay.svg" alt="buttonImg" className={styles.btnImg}/>
+                    ACESSE AGORA <Image src="/buttonPlay.svg" alt="buttonImg" className={styles.btnImg}/>
                 </Button>
                 </Link>
             </Col>
             <Col md>
-                <img src="/homeNoAuth/imgPresentation.png" alt="imgIndex" 
+                <Image src="/homeNoAuth/imgPresentation.png" alt="imgIndex" 
                 className={styles.imgPresentation}/>
             </Col>
         </Row>
         <Row>
             <Col className="d-flex justify-content-center pt-5">
-                <img src="/homeNoAuth/iconArrowDown.svg" alt="arrowDown" 
+                <Image src="/homeNoAuth/iconArrowDown.svg" alt="arrowDown" 
                 className={styles.arrowDown} />
             </Col>
         </Row>
